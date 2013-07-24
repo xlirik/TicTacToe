@@ -1,11 +1,11 @@
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
 
         Field field = new Field();
+        
         Scanner scan = new Scanner(System.in);
-        field.eraseField();
+        
+        field.newField();
 
         System.out.println("Numbers of cells: \n[1][2][3]\n[4][5][6]\n[7][8][9]");
 
