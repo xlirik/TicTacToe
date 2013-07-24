@@ -6,6 +6,7 @@ public class Field extends Main{
     private static final char DEFAULT_FIELD_SIZE = 3;
     protected char mark = ' ';
     protected boolean win = false;
+    private int count = 1;
 
     Scanner scan = new Scanner(System.in);
 
