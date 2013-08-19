@@ -14,8 +14,12 @@ public class Field {
     protected int loop = 1;
     protected char mark = ' ';
     protected boolean win = false;
+<<<<<<< HEAD
     protected int count = 1;
     protected int cellNumber = 0;
+=======
+    private int count = 1;
+>>>>>>> b0617aecbb6e45aebdf1966ad24d0052496e09e5
 
     Scanner scan = new Scanner(System.in);
     Random rand = new Random();
@@ -65,24 +69,36 @@ public class Field {
         System.out.print("[" + field[x][y] + "]");
     }
 
+<<<<<<< HEAD
     public void actionX(int cellNumber) {
         if(cellNumber == 0) {
             cellNumber = scan.nextInt();
         }
+=======
+    public void playerActionX() {
+        System.out.println("Enter number for X:");
+        int cellNumber = scan.nextInt();
+>>>>>>> b0617aecbb6e45aebdf1966ad24d0052496e09e5
         count = 1;
         mark = 'X';
         for (int i = 0; i < DEFAULT_FIELD_SIZE; i++) {
             for (int j = 0; j < DEFAULT_FIELD_SIZE; j++) {
                 if (count == cellNumber) {
                     if(field[j][i] != DEFAULT_CELL_VALUE) {
+<<<<<<< HEAD
                         cellNumber = 0;
                         actionX(cellNumber);
+=======
+                        System.out.println("Input error");
+                        playerActionX();
+>>>>>>> b0617aecbb6e45aebdf1966ad24d0052496e09e5
                     } else {
                         field[j][i] = mark;
                     }
                 }
                 count++;
             }
+<<<<<<< HEAD
         }
     }
 
@@ -90,20 +106,35 @@ public class Field {
         if(cellNumber == 0) {
             cellNumber = scan.nextInt();
         }
+=======
+
+        }
+    }
+
+    public void playerActionO() {
+        System.out.println("Enter number for O:");
+        int cellNumber = scan.nextInt();
+>>>>>>> b0617aecbb6e45aebdf1966ad24d0052496e09e5
         count = 1;
         mark = 'O';
         for (int i = 0; i < DEFAULT_FIELD_SIZE; i++) {
             for (int j = 0; j < DEFAULT_FIELD_SIZE; j++) {
                 if (count == cellNumber) {
                     if(field[j][i] != DEFAULT_CELL_VALUE) {
+<<<<<<< HEAD
                         cellNumber = 0;
                         actionO(cellNumber);
+=======
+                        System.out.println("Input error");
+                        playerActionO();
+>>>>>>> b0617aecbb6e45aebdf1966ad24d0052496e09e5
                     } else {
                         field[j][i] = mark;
                     }
                 }
                 count++;
             }
+<<<<<<< HEAD
         }
     }
 
@@ -123,6 +154,8 @@ public class Field {
                 }
                 count++;
             }
+=======
+>>>>>>> b0617aecbb6e45aebdf1966ad24d0052496e09e5
         }
     }
 
