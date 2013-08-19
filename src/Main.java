@@ -5,26 +5,14 @@ public class Main {
 
         Field field = new Field();
         Scanner scan = new Scanner(System.in);
-        field.eraseField();
+        Server server = new Server();
+        Client client = new Client();
+        Menu menu = new Menu();
 
-        System.out.println("Numbers of cells: \n[1][2][3]\n[4][5][6]\n[7][8][9]");
+        field.newField();
 
-        while (true) {
+        menu.newGame();
 
-            field.playerActionX();
-            field.showField();
-
-            field.checkWin(field.mark);
-
-            if (field.win) break;
-
-            field.playerActionO();
-            field.showField();
-
-            field.checkWin(field.mark);
-
-            if (field.win) break;
-        }
     }
 }
 

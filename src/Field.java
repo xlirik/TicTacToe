@@ -1,15 +1,28 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Random;
 import java.util.Scanner;
 
-public class Field extends Main{
 
-    private static final char DEFAULT_CELL_VALUE = ' ';
-    private static final char DEFAULT_FIELD_SIZE = 3;
+public class Field {
+
+    protected static final char DEFAULT_CELL_VALUE = ' ';
+    protected static final char DEFAULT_FIELD_SIZE = 3;
+    protected int loop = 1;
     protected char mark = ' ';
     protected boolean win = false;
+    protected int count = 1;
+    protected int cellNumber = 0;
 
     Scanner scan = new Scanner(System.in);
+    Random rand = new Random();
 
-    private final int fieldSize;
+
+
+    protected final int fieldSize;
 
     protected char[][] field;
 
@@ -22,7 +35,7 @@ public class Field extends Main{
         field = new char[fieldSize][fieldSize];
     }
 
-    public void eraseField() {
+    public void newField() {
         for (int i = 0; i < fieldSize; i++) {
             eraseLine(i);
         }
@@ -52,183 +65,64 @@ public class Field extends Main{
         System.out.print("[" + field[x][y] + "]");
     }
 
-    /*
-        Два switch, что бы не вводить координаты ячейки.
-        Размышляю как вынести в метод внутреннюю проверку на определенной ячейки, в зависимости от case.
-    */
-    public void playerActionX() {
-        System.out.println("Enter number for X:");
-        int cellX = scan.nextInt();
+    public void actionX(int cellNumber) {
+        if(cellNumber == 0) {
+            cellNumber = scan.nextInt();
+        }
+        count = 1;
         mark = 'X';
-        switch (cellX) {
-            case 1:
-                if (field[0][0] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionX();
-                } else {
-                    field[0][0] = mark;
+        for (int i = 0; i < DEFAULT_FIELD_SIZE; i++) {
+            for (int j = 0; j < DEFAULT_FIELD_SIZE; j++) {
+                if (count == cellNumber) {
+                    if(field[j][i] != DEFAULT_CELL_VALUE) {
+                        cellNumber = 0;
+                        actionX(cellNumber);
+                    } else {
+                        field[j][i] = mark;
+                    }
                 }
-                break;
-
-            case 2:
-                if (field[1][0] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionX();
-                } else {
-                    field[1][0] = mark;
-                }
-                break;
-
-            case 3:
-                if (field[2][0] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionX();
-                } else {
-                    field[2][0] = mark;
-                }
-                break;
-
-            case 4:
-                if (field[0][1] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionX();
-                } else {
-                    field[0][1] = mark;
-                }
-                break;
-
-            case 5:
-                if (field[1][1] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionX();
-                } else {
-                    field[1][1] = mark;
-                }
-                break;
-
-            case 6:
-                if (field[2][1] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionX();
-                } else {
-                    field[2][1] = mark;
-                }
-                break;
-
-            case 7:
-                if (field[0][2] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionX();
-                } else {
-                    field[0][2] = mark;
-                }
-                break;
-
-            case 8:
-                if (field[1][2] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionX();
-                } else {
-                    field[1][2] = mark;
-                }
-                break;
-
-            case 9:
-                if (field[2][2] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionX();
-                } else {
-                    field[2][2] = mark;
-                }
-                break;
+                count++;
+            }
         }
     }
 
-    public void playerActionO() {
-        System.out.println("Enter number for O:");
-        int cellO = scan.nextInt();
+    public void actionO(int cellNumber) {
+        if(cellNumber == 0) {
+            cellNumber = scan.nextInt();
+        }
+        count = 1;
         mark = 'O';
-        switch (cellO) {
-            case 1:
-                if (field[0][0] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionO();
-                } else {
-                    field[0][0] = mark;
+        for (int i = 0; i < DEFAULT_FIELD_SIZE; i++) {
+            for (int j = 0; j < DEFAULT_FIELD_SIZE; j++) {
+                if (count == cellNumber) {
+                    if(field[j][i] != DEFAULT_CELL_VALUE) {
+                        cellNumber = 0;
+                        actionO(cellNumber);
+                    } else {
+                        field[j][i] = mark;
+                    }
                 }
-                break;
+                count++;
+            }
+        }
+    }
 
-            case 2:
-                if (field[1][0] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionO();
-                } else {
-                    field[1][0] = mark;
+    public void actionAI() {
+        cellNumber = rand.nextInt(9) + 1;
+        count = 1;
+        mark = 'O';
+        for (int i = 0; i < DEFAULT_FIELD_SIZE; i++) {
+            for (int j = 0; j < DEFAULT_FIELD_SIZE; j++) {
+                if (count == cellNumber) {
+                    if(field[j][i] != DEFAULT_CELL_VALUE) {
+                        actionAI();
+                    } else {
+                        System.out.println("AI step: " + cellNumber);
+                        field[j][i] = mark;
+                    }
                 }
-                break;
-
-            case 3:
-                if (field[2][0] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionO();
-                } else {
-                    field[2][0] = mark;
-                }
-                break;
-
-            case 4:
-                if (field[0][1] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionO();
-                } else {
-                    field[0][1] = mark;
-                }
-                break;
-
-            case 5:
-                if (field[1][1] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionO();
-                } else {
-                    field[1][1] = mark;
-                }
-                break;
-
-            case 6:
-                if (field[2][1] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionO();
-                } else {
-                    field[2][1] = mark;
-                }
-                break;
-
-            case 7:
-                if (field[0][2] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionO();
-                } else {
-                    field[0][2] = mark;
-                }
-                break;
-
-            case 8:
-                if (field[1][2] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionO();
-                } else {
-                    field[1][2] = mark;
-                }
-                break;
-
-            case 9:
-                if (field[2][2] != DEFAULT_CELL_VALUE) {
-                    System.out.println("Error, try again!");
-                    playerActionO();
-                } else {
-                    field[2][2] = mark;
-                }
-                break;
+                count++;
+            }
         }
     }
 
@@ -253,7 +147,8 @@ public class Field extends Main{
             }
         }
     }
+
+    public void checkDraw() {
+
+    }
 }
-
-
-
